@@ -1,3 +1,4 @@
+import Input from "#/components/input";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/signup")({
@@ -12,17 +13,10 @@ function RouteComponent() {
         <h2>Manage your expenses with ease</h2>
       </div>
 
-      <div>
+      <div className="max-w-sm bg-slate-800 p-6 rounded-lg mx-auto">
         <form>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              className="border border-sky-500 rounded-md p-2"
-            />
-          </div>
+          <Input label="Name" />
+          <Input label="Email" />
         </form>
       </div>
     </main>
@@ -30,3 +24,4 @@ function RouteComponent() {
 }
 
 // http://localhost:3000/auth/signup
+// http://github.com/oficina-do-futuro
