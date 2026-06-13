@@ -11,6 +11,7 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 
 import type { QueryClient } from "@tanstack/react-query";
+import Navbar from "#/components/navbar";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -47,6 +48,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-slate-950 text-white min-h-screen pb-40">
+        <Navbar />
         {children}
         <TanStackDevtools
           config={{
