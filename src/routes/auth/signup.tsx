@@ -1,18 +1,19 @@
 import Input from "#/components/input";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/auth/signup")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [error, setError] = useState();
+
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
-    console.log(JSON.stringify(data));
 
     fetch("http://192.168.1.219:8000/api/auth/signup", {
       method: "POST",
@@ -20,7 +21,17 @@ function RouteComponent() {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.status === "fail") setError(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+      });
     // GET - para pegar dados
     // POST - criar dados
     // PATCH - atualizar dado
@@ -47,7 +58,8 @@ function RouteComponent() {
             Já tem uma conta?
           </a>
           <button className="bg-sky-500 rounded-md p-1">Create Account</button>
-          http://192.168.1.219:8000/api/docs
+
+          {error && <p className="text-red-500">{error.message}</p>}
         </form>
       </div>
     </main>
