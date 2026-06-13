@@ -12,10 +12,14 @@ function RouteComponent() {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log(data);
+    console.log(JSON.stringify(data));
 
     fetch("http://192.168.1.219:8000/api/auth/signup", {
       method: "POST",
       body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     // GET - para pegar dados
     // POST - criar dados
