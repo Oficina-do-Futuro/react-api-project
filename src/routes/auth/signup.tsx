@@ -1,16 +1,20 @@
 import Input from "#/components/input";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { LoaderCircleIcon } from "lucide-react";
 
 export const Route = createFileRoute("/auth/signup")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [error, setError] = useState();
+  const [error, setError] = useState<{ message: string }>();
+  const [loading, setLoading] = useState(false);
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(undefined);
+    setLoading(true);
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
@@ -27,10 +31,17 @@ function RouteComponent() {
       })
       .then((data) => {
         if (data?.status === "fail") setError(data);
+        else {
+          e.target.reset();
+          alert("Account created successfully");
+        }
       })
       .catch((error) => {
         console.log(error);
         setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
     // GET - para pegar dados
     // POST - criar dados
@@ -57,7 +68,16 @@ function RouteComponent() {
           >
             Já tem uma conta?
           </a>
-          <button className="bg-sky-500 rounded-md p-1">Create Account</button>
+          <button
+            disabled={loading}
+            className="bg-sky-500 rounded-md p-1 disabled:bg-sky-700 text-center"
+          >
+            {loading ? (
+              <LoaderCircleIcon className="animate-spin mx-auto" />
+            ) : (
+              "Create Account"
+            )}
+          </button>
 
           {error && <p className="text-red-500">{error.message}</p>}
         </form>
