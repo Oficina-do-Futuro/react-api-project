@@ -10,6 +10,9 @@ export const Route = createFileRoute("/expense-categories/create")({
 function RouteComponent() {
   const { handleSubmit, isLoading, error } = useSubmitForm(
     "/expense-categories",
+    () => {
+      alert("Exepense Category Created Successfully");
+    },
   );
 
   return (

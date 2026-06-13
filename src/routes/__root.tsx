@@ -42,7 +42,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="bg-slate-950 text-white min-h-screen pb-40">
         <Navbar />
-        {children}
+        <main className="pt-8">{children}</main>
         <TanStackDevtools
           config={{
             position: "bottom-right",

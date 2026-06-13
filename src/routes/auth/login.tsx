@@ -35,6 +35,7 @@ function RouteComponent() {
         if (data?.status === "fail") setError(data);
         else {
           e.target.reset();
+          localStorage.setItem("accessToken", data.accessToken);
           navigate({ to: "/" });
         }
       })

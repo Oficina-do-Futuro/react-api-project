@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-export default function useSubmitForm(url: string) {
+export default function useSubmitForm(
+  url: string,
+  callback?: (data: Record<string, any>) => void,
+) {
   const [error, setError] = useState<{ message: string }>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -17,6 +20,7 @@ export default function useSubmitForm(url: string) {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     })
       .then((res) => {
@@ -25,6 +29,7 @@ export default function useSubmitForm(url: string) {
       .then((data) => {
         if (data?.status === "fail") setError(data);
         else {
+          callback?.(data);
           e.target.reset();
         }
       })
