@@ -2,6 +2,7 @@ import Input from "#/components/input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { LoaderCircleIcon } from "lucide-react";
+import Button from "#/components/button";
 
 export const Route = createFileRoute("/auth/login")({
   component: RouteComponent,
@@ -68,16 +69,8 @@ function RouteComponent() {
           >
             Ainda não tem uma conta?
           </a>
-          <button
-            disabled={loading}
-            className="bg-sky-500 rounded-md p-1 disabled:bg-sky-700 text-center"
-          >
-            {loading ? (
-              <LoaderCircleIcon className="animate-spin mx-auto" />
-            ) : (
-              "Login"
-            )}
-          </button>
+
+          <Button isLoading={loading}>Login</Button>
 
           {error && <p className="text-red-500">{error.message}</p>}
         </form>
