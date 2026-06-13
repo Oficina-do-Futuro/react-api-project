@@ -12,7 +12,7 @@ export default function useSubmitForm(url: string) {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    fetch("http://192.168.1.219:8000/api/" + url, {
+    fetch("http://192.168.1.219:8000/api" + url, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
