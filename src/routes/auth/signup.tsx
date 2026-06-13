@@ -6,6 +6,23 @@ export const Route = createFileRoute("/auth/signup")({
 });
 
 function RouteComponent() {
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    console.log(data);
+
+    fetch("http://192.168.1.219:8000/api/auth/signup", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    // GET - para pegar dados
+    // POST - criar dados
+    // PATCH - atualizar dado
+    // DELETE - deletar
+  }
+
   return (
     <main className="bg-slate-950 text-white min-h-screen pb-40">
       <div className="text-center py-16">
@@ -14,12 +31,11 @@ function RouteComponent() {
       </div>
 
       <div className="max-w-sm bg-slate-800 p-16 rounded-lg mx-auto">
-        <form className="grid gap-4">
+        <form onSubmit={handleSubmit} className="grid gap-4">
           <Input label="Name" name="name" />
           <Input label="Email" name="email" />
           <Input label="Password" name="password" type="password" />
           <Input label="Birthdate" name="birthdate" type="date" />
-
           <a
             href="/auth/login"
             className="text-right hover:text-sky-300 transition-all"
@@ -27,6 +43,7 @@ function RouteComponent() {
             Já tem uma conta?
           </a>
           <button className="bg-sky-500 rounded-md p-1">Create Account</button>
+          http://192.168.1.219:8000/api/docs
         </form>
       </div>
     </main>
@@ -35,3 +52,4 @@ function RouteComponent() {
 
 // http://localhost:3000/auth/signup
 // http://github.com/oficina-do-futuro
+// http://192.168.1.219:8000/api/docs
