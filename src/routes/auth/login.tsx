@@ -3,7 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { LoaderCircleIcon } from "lucide-react";
 
-export const Route = createFileRoute("/auth/signup")({
+export const Route = createFileRoute("/auth/login")({
   component: RouteComponent,
 });
 
@@ -20,7 +20,7 @@ function RouteComponent() {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
 
-    fetch("http://192.168.1.219:8000/api/auth/signup", {
+    fetch("http://192.168.1.219:8000/api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -34,8 +34,7 @@ function RouteComponent() {
         if (data?.status === "fail") setError(data);
         else {
           e.target.reset();
-          alert("Account created successfully");
-          navigate({ to: "/auth/login" });
+          navigate({ to: "/" });
         }
       })
       .catch((error) => {
@@ -60,15 +59,14 @@ function RouteComponent() {
 
       <div className="max-w-sm bg-slate-800 p-16 rounded-lg mx-auto">
         <form onSubmit={handleSubmit} className="grid gap-4">
-          <Input label="Name" name="name" />
           <Input label="Email" name="email" />
           <Input label="Password" name="password" type="password" />
-          <Input label="Birthdate" name="birthdate" type="date" />
+
           <a
-            href="/auth/login"
+            href="/auth/signup"
             className="text-right hover:text-sky-300 transition-all"
           >
-            Já tem uma conta?
+            Ainda não tem uma conta?
           </a>
           <button
             disabled={loading}
@@ -77,7 +75,7 @@ function RouteComponent() {
             {loading ? (
               <LoaderCircleIcon className="animate-spin mx-auto" />
             ) : (
-              "Create Account"
+              "Login"
             )}
           </button>
 
