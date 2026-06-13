@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExpensesCreateRouteImport } from './routes/expenses/create'
 import { Route as ExpenseCategoriesCreateRouteImport } from './routes/expense-categories/create'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
@@ -17,6 +18,11 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpensesCreateRoute = ExpensesCreateRouteImport.update({
+  id: '/expenses/create',
+  path: '/expenses/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpenseCategoriesCreateRoute = ExpenseCategoriesCreateRouteImport.update({
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/expense-categories/create': typeof ExpenseCategoriesCreateRoute
+  '/expenses/create': typeof ExpensesCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/expense-categories/create': typeof ExpenseCategoriesCreateRoute
+  '/expenses/create': typeof ExpensesCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,18 +61,30 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/expense-categories/create': typeof ExpenseCategoriesCreateRoute
+  '/expenses/create': typeof ExpensesCreateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/login' | '/auth/signup' | '/expense-categories/create'
+  fullPaths:
+    | '/'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/expense-categories/create'
+    | '/expenses/create'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/login' | '/auth/signup' | '/expense-categories/create'
+  to:
+    | '/'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/expense-categories/create'
+    | '/expenses/create'
   id:
     | '__root__'
     | '/'
     | '/auth/login'
     | '/auth/signup'
     | '/expense-categories/create'
+    | '/expenses/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -72,6 +92,7 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
   ExpenseCategoriesCreateRoute: typeof ExpenseCategoriesCreateRoute
+  ExpensesCreateRoute: typeof ExpensesCreateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -81,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expenses/create': {
+      id: '/expenses/create'
+      path: '/expenses/create'
+      fullPath: '/expenses/create'
+      preLoaderRoute: typeof ExpensesCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expense-categories/create': {
@@ -112,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
   ExpenseCategoriesCreateRoute: ExpenseCategoriesCreateRoute,
+  ExpensesCreateRoute: ExpensesCreateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
